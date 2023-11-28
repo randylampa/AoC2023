@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Aoc 2015
+# randylampa/AoC2023
 #
 
 import sys
@@ -51,9 +51,3 @@ def read_file_into_lists_of_ints(name = 'input', mapfnc = lambda x:x.strip())->l
 
 def print_answer(part:int, demo, answer) -> None:
 	print("Answer_{} = {}{}".format(part, answer, ' (demo)' if demo else ''))
-
-def main(args):
-	return 0
-
-if __name__ == '__main__':
-	sys.exit(main(sys.argv))
