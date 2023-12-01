@@ -12,7 +12,7 @@ import utils
 
 YEAR = $YEAR
 DAY = $DAY
-ISSUE = $ISSUE
+ISSUE = '$ISSUE'
 
 
 
@@ -21,7 +21,7 @@ ISSUE = $ISSUE
 '''
 def solve_part_1(demo:bool) -> str:
 
-	fn = utils.get_input_file(demo, ISSUE, True)
+	fn = utils.get_input_file(demo, DAY, YEAR)
 	print(fn)
 	"""Do something here >>>"""
 
@@ -34,7 +34,8 @@ def solve_part_1(demo:bool) -> str:
 	SOLVE PART 2
 '''
 def solve_part_2(demo:bool) -> str:
-	fn = utils.get_input_file(demo, ISSUE, True)
+
+	fn = utils.get_input_file(demo, DAY, YEAR)
 	print(fn)
 	"""Do something here >>>"""
 
@@ -42,7 +43,7 @@ def solve_part_2(demo:bool) -> str:
 	utils.print_answer(2, demo, answer)
 	return answer
 
-def main(args):
+def main():
 
 	solve_part_1(1)
 
