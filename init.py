@@ -52,7 +52,7 @@ def main():
 		'$URL_ANSWER':url,
 	}
 
-	def trans(instr):
+	def trans(instr:str)->str:
 		for k in trtable.keys():
 			instr = instr.replace(k, str(trtable[k]))
 		return instr

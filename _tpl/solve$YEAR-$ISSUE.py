@@ -21,7 +21,7 @@ ISSUE = '$ISSUE'
 '''
 def solve_part_1(demo:bool) -> str:
 
-	fn = utils.get_input_file(demo, DAY, YEAR)
+	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
 	"""Do something here >>>"""
 
@@ -35,7 +35,7 @@ def solve_part_1(demo:bool) -> str:
 '''
 def solve_part_2(demo:bool) -> str:
 
-	fn = utils.get_input_file(demo, DAY, YEAR)
+	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
 	"""Do something here >>>"""
 

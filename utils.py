@@ -6,16 +6,18 @@
 
 import sys
 
-def get_input_file(demo:bool, day:int, year:int) -> str:
+def get_input_file(demo:int, day:int, year:int) -> str:
 	syear = str(year)
 	sday = str(day).rjust(2,'0')
-	f = 'data{}{}-{}'.format('-demo' if demo else '', syear, sday)
+	sdemo = '-demo{}-'.format(str(demo) if demo>0 else '')
+	f = 'data{}{}-{}'.format(sdemo if demo>0 else '', syear, sday)
 	return f
 
-def get_output_file(demo:bool, day:int, year:int) -> str:
+def get_output_file(demo:int, day:int, year:int) -> str:
 	syear = str(year)
 	sday = str(day).rjust(2,'0')
-	f = 'outdata{}{}-{}'.format('-demo' if demo else '', syear, sday)
+	sdemo = '-demo{}-'.format(str(demo) if demo>0 else '')
+	f = 'outdata{}{}-{}'.format(sdemo if demo>0 else '', syear, sday)
 	return f
 
 def read_file_into_list(name = 'input', mapfnc = lambda x:x.strip()) -> list:
