@@ -65,7 +65,9 @@ def solve_part_1b(demo:bool) -> str:
 				nums = nums+char
 				break
 		# ~ print(line, nums, int(nums))
-		numbers.append(int(nums))
+		if nums:
+			print(line, nums, int(nums))
+			numbers.append(int(nums))
 
 	answer = sum(numbers)
 
@@ -85,6 +87,64 @@ strigits = [
 	'eight',
 	'nine',
 ]
+
+nigits = [
+	'0',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+]
+
+digits = nigits + strigits
+
+'''
+	SOLVE PART 2b
+'''
+def solve_part_2b(demo:bool) -> str:
+
+	fn = utils.get_input_file(2 if demo else 0, DAY, YEAR)
+	print(fn)
+	"""Do something here >>>"""
+
+	lines = utils.read_file_into_list(fn)
+
+	numbers = []
+	for line in lines:
+		finds = {}
+		for digit in digits:
+			index = digits.index(digit)
+			pos = None
+			try:
+				pos = line.index(digit)
+			except ValueError:
+				pass
+			if pos is not None:
+				finds[pos] = digit
+			# ~ print(digit, index, pos, finds)
+		ks = list(finds.keys())
+		ks.sort()
+		# ~ print(line, ks, finds)
+		find1 = finds[ks[0]]
+		find9 = finds[ks[-1]]
+		# ~ print(find1, find9)
+		i1 = digits.index(find1)%10
+		i9 = digits.index(find9)%10
+		# ~ print(i1, i9)
+		nums = str(i1) + str(i9)
+		# ~ print(line, nums, int(nums))
+		numbers.append(int(nums))
+
+	answer = sum(numbers)
+
+	"""<<< Do something here"""
+	utils.print_answer(2, demo, answer)
+	return answer
 
 def transNums(instr:str)->str:
 	'''
@@ -153,12 +213,14 @@ def main():
 
 	# ~ solve_part_1(0)
 	# ~ 54597 - is right
-	solve_part_1b(0)
+	# ~ solve_part_1b(0)
 	# ~ 54597 - is right
 
 	# ~ solve_part_2(0)
 	# ~ 54039 - too low
 	# ~ 54513 - too high
+	solve_part_2b(0)
+	# ~ 54518 - too high
 
 	pass
 
