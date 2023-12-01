@@ -6,6 +6,7 @@
 
 import sys
 import getopt
+import os
 
 YEAR = 2023
 
@@ -51,13 +52,34 @@ def main():
 		'$URL_ANSWER':url,
 	}
 
+	def trans(instr):
+		for k in trtable.keys():
+			instr = instr.replace(k, str(trtable[k]))
+		return instr
+
 	print(trtable)
 
+	srcDir = '_tpl'
+	tgtDir = issue
+
+	try:
+		os.mkdir(tgtDir)
+	except FileExistsError:
+		print('dir already exists')
+
 	'''
-	TODO
 	get all files from dir `_tpl`. copy them into dir `$ISSUE`
 	rename & modify according to `trtable`
 	'''
+	files = os.listdir(srcDir)
+	for srcFl in files:
+		tgtFl = trans(srcFl)
+		print(srcFl, tgtFl)
+		fhin = open(srcDir+'/'+srcFl)
+		content = trans(fhin.read())
+		fhout = open(tgtDir+'/'+tgtFl, 'w')
+		fhout.write(content)
+		fhin.close();fhout.close()
 
 	return 0
 

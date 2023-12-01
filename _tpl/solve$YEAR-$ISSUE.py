@@ -3,6 +3,7 @@
 #
 # randylampa/AoC$YEAR
 # Advent of Code $YEAR - $DAY
+# @link $URL
 
 import sys
 import re
