@@ -21,7 +21,7 @@ ISSUE = '01'
 '''
 def solve_part_1(demo:bool) -> str:
 
-	fn = utils.get_input_file(demo, DAY, YEAR)
+	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
 	"""Do something here >>>"""
 
@@ -40,14 +40,77 @@ def solve_part_1(demo:bool) -> str:
 	utils.print_answer(1, demo, answer)
 	return answer
 
+digits = [
+	'zero',
+	'one',
+	'two',
+	'three',
+	'four',
+	'five',
+	'six',
+	'seven',
+	'eight',
+	'nine',
+]
+
+def transNums(instr:str)->str:
+	'''
+	naive, replace in order 0,1,2...
+	'''
+	for digit in digits:
+		index = digits.index(digit)
+		# ~ print(digit, index)
+		instr = instr.replace(digit, str(index))
+	return instr
+
+def transNums2(instr:str)->str:
+	'''
+	replaces in order of find
+	'''
+	finds = {}
+	for digit in digits:
+		index = digits.index(digit)
+		pos = None
+		try:
+			pos = instr.index(digit)
+		except ValueError:
+			pass
+		if pos is not None:
+			finds[pos] = digit
+		print(digit, index, pos, finds)
+	ks = list(finds.keys())
+	ks.sort()
+	for i in ks:
+		digit = finds[i]
+		index = digits.index(digit)
+		print(digit, index)
+		instr = instr.replace(digit, str(index))
+	return instr
 
 '''
 	SOLVE PART 2
 '''
 def solve_part_2(demo:bool) -> str:
-	fn = utils.get_input_file(demo, DAY, YEAR)
+
+	# ~ line = 'xtwone3four'
+	# ~ print(transNums2(line))
+	# ~ return ''
+
+	fn = utils.get_input_file(2 if demo else 0, DAY, YEAR)
 	print(fn)
 	"""Do something here >>>"""
+
+	lines = utils.read_file_into_list(fn)
+
+	numbers = []
+	for line0 in lines:
+		line = transNums(line0)
+		line = re.sub(r'\D', '', line)
+		nums = line[0]+line[-1]
+		# ~ print(line0, line, nums, int(nums))
+		numbers.append(int(nums))
+
+	answer = sum(numbers)
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -55,9 +118,12 @@ def solve_part_2(demo:bool) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
+	# ~ 54597 - is right
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
+	# ~ 54039 - too low
+	# ~ 54513 - too high
 
 	pass
 
