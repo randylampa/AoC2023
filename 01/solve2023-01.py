@@ -40,7 +40,40 @@ def solve_part_1(demo:bool) -> str:
 	utils.print_answer(1, demo, answer)
 	return answer
 
-digits = [
+'''
+	SOLVE PART 1b
+'''
+def solve_part_1b(demo:bool) -> str:
+
+	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
+	print(fn)
+	"""Do something here >>>"""
+
+	lines = utils.read_file_into_list(fn)
+
+	numbers = []
+	for line in lines:
+		nums = ''
+		for char in line:
+			if char >= '0' and char <= '9':
+				nums = nums+char
+				break
+		rline = list(line)
+		rline.reverse()
+		for char in rline:
+			if char >= '0' and char <= '9':
+				nums = nums+char
+				break
+		# ~ print(line, nums, int(nums))
+		numbers.append(int(nums))
+
+	answer = sum(numbers)
+
+	"""<<< Do something here"""
+	utils.print_answer(1, demo, answer)
+	return answer
+
+strigits = [
 	'zero',
 	'one',
 	'two',
@@ -57,8 +90,8 @@ def transNums(instr:str)->str:
 	'''
 	naive, replace in order 0,1,2...
 	'''
-	for digit in digits:
-		index = digits.index(digit)
+	for digit in strigits:
+		index = strigits.index(digit)
 		# ~ print(digit, index)
 		instr = instr.replace(digit, str(index))
 	return instr
@@ -68,8 +101,8 @@ def transNums2(instr:str)->str:
 	replaces in order of find
 	'''
 	finds = {}
-	for digit in digits:
-		index = digits.index(digit)
+	for digit in strigits:
+		index = strigits.index(digit)
 		pos = None
 		try:
 			pos = instr.index(digit)
@@ -82,7 +115,7 @@ def transNums2(instr:str)->str:
 	ks.sort()
 	for i in ks:
 		digit = finds[i]
-		index = digits.index(digit)
+		index = strigits.index(digit)
 		print(digit, index)
 		instr = instr.replace(digit, str(index))
 	return instr
@@ -120,8 +153,10 @@ def main():
 
 	# ~ solve_part_1(0)
 	# ~ 54597 - is right
+	solve_part_1b(0)
+	# ~ 54597 - is right
 
-	solve_part_2(0)
+	# ~ solve_part_2(0)
 	# ~ 54039 - too low
 	# ~ 54513 - too high
 
