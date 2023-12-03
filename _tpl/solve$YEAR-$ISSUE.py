@@ -25,6 +25,8 @@ def solve_part_1(demo:bool) -> str:
 	print(fn)
 	"""Do something here >>>"""
 
+	answer = None
+
 	"""<<< Do something here"""
 	utils.print_answer(1, demo, answer)
 	return answer
@@ -38,6 +40,8 @@ def solve_part_2(demo:bool) -> str:
 	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
 	"""Do something here >>>"""
+
+	answer = None
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
