@@ -6,9 +6,12 @@
 # @link https://adventofcode.com/2023/day/3
 
 import sys
-import re
-sys.path.append('..')
+import os
+cur_dir = os.path.dirname(os.path.realpath(__file__))
+par_dir = os.path.dirname(cur_dir)
+sys.path.append(par_dir)
 import utils
+import re
 
 YEAR = 2023
 DAY = 3
@@ -23,6 +26,7 @@ def solve_part_1(demo:bool) -> str:
 
 	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
 	answer = None
@@ -39,6 +43,7 @@ def solve_part_2(demo:bool) -> str:
 
 	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
 	answer = None

@@ -6,9 +6,12 @@
 # @link https://adventofcode.com/2023/day/1
 
 import sys
-import re
-sys.path.append('..')
+import os
+cur_dir = os.path.dirname(os.path.realpath(__file__))
+par_dir = os.path.dirname(cur_dir)
+sys.path.append(par_dir)
 import utils
+import re
 
 YEAR = 2023
 DAY = 1
@@ -23,9 +26,10 @@ def solve_part_1(demo:bool) -> str:
 
 	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	lines = utils.read_file_into_list(fn)
+	lines = utils.read_file_into_list(fl)
 
 	numbers = []
 	for line in lines:
@@ -47,9 +51,10 @@ def solve_part_1b(demo:bool) -> str:
 
 	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	lines = utils.read_file_into_list(fn)
+	lines = utils.read_file_into_list(fl)
 
 	numbers = []
 	for line in lines:
@@ -110,9 +115,10 @@ def solve_part_2b(demo:bool) -> str:
 
 	fn = utils.get_input_file(2 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	lines = utils.read_file_into_list(fn)
+	lines = utils.read_file_into_list(fl)
 
 	numbers = []
 	for line in lines:
@@ -191,9 +197,10 @@ def solve_part_2(demo:bool) -> str:
 
 	fn = utils.get_input_file(2 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	lines = utils.read_file_into_list(fn)
+	lines = utils.read_file_into_list(fl)
 
 	numbers = []
 	for line0 in lines:

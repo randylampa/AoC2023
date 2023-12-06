@@ -6,9 +6,12 @@
 # @link https://adventofcode.com/2023/day/2
 
 import sys
-import re
-sys.path.append('..')
+import os
+cur_dir = os.path.dirname(os.path.realpath(__file__))
+par_dir = os.path.dirname(cur_dir)
+sys.path.append(par_dir)
 import utils
+import re
 
 YEAR = 2023
 DAY = 2
@@ -48,7 +51,9 @@ def print_game(game:dict):
 	print('  red', game['red'])
 	print('  green', game['green'])
 	print('  blue', game['blue'])
-	print('tosses', game['toss'])
+	print('tosses')
+	for toss in game['toss']:
+		print(' ', toss)
 
 '''
 	SOLVE PART 1
@@ -57,9 +62,10 @@ def solve_part_1(demo:bool) -> str:
 
 	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	lines = utils.read_file_into_list(fn)
+	lines = utils.read_file_into_list(fl)
 	# ~ print(lines)
 
 	possible_game = {
@@ -79,6 +85,9 @@ def solve_part_1(demo:bool) -> str:
 			if game[k]>possible_game[k]:
 				is_possible = False
 				impossibleIds.append(game['id'])
+				# ~ print(line)
+				# ~ print_game(game)
+				# ~ exit()
 				break
 		# ~ print(is_possible)
 	print(impossibleIds)
@@ -97,6 +106,7 @@ def solve_part_2(demo:bool) -> str:
 
 	fn = utils.get_input_file(1 if demo else 0, DAY, YEAR)
 	print(fn)
+	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
 	answer = None
