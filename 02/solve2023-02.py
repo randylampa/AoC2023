@@ -39,11 +39,38 @@ def parse_game_line(line:str)->dict:
 			'blue': 0,
 		}
 		for clr in gametoss.keys():
+			# ~ mtch = re.findall(r'(?P<n>\d+) '+clr, toss)
+			# ~ if len(mtch)>1:
+				# ~ print('THIS TOSS IS FAULTY!!!', line, toss)
+				# ~ exit()
 			mtch = re.search(r'(?P<n>\d+) '+clr, toss)
 			n = int(mtch.groupdict()['n']) if mtch else 0
 			gametoss[clr] = n
 			game[clr] = max(game[clr], n)
 		game['toss'].append(gametoss)
+	return game
+
+def parse_game_line2(line:str)->dict:
+	game = {
+		'id': None,
+		'red': 0,
+		'green': 0,
+		'blue': 0,
+		'toss': [],
+	}
+	gametoss = {
+		'red': 0,
+		'green': 0,
+		'blue': 0,
+	}
+	mtch = re.search(r'Game (?P<id>\d+):', line)
+	game['id'] = int(mtch.groupdict()['id']) if mtch else 0
+
+	for clr in gametoss.keys():
+		mtch = [*map(int, re.findall(r'(?P<n>\d+) '+clr, line))]
+		# ~ print(clr, mtch)
+		game[clr] = max(mtch)
+
 	return game
 
 def print_game(game:dict):
@@ -78,19 +105,23 @@ def solve_part_1(demo:bool) -> str:
 
 	for line in lines:
 		# ~ print(line)
-		game = parse_game_line(line)
+		# ~ game = parse_game_line(line)
+		game = parse_game_line2(line)
 		# ~ print_game(game)
+		# ~ continue
 		is_possible = True
 		for k in possible_game.keys():
-			if game[k]>possible_game[k]:
+			if game[k] > possible_game[k]:
 				is_possible = False
 				impossibleIds.append(game['id'])
+				print('Game {} is impossible because {} > {} {}'.format(game['id'], game[k], possible_game[k], k))
 				# ~ print(line)
 				# ~ print_game(game)
 				# ~ exit()
 				break
 		# ~ print(is_possible)
-	print(impossibleIds)
+	print('count:', len(impossibleIds))
+	print('list:', impossibleIds)
 
 	answer = sum(impossibleIds)
 
