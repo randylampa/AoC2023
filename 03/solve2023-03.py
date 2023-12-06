@@ -29,6 +29,21 @@ def solve_part_1(demo:bool) -> str:
 	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
+	lines = utils.read_file_into_list(fl)
+	# ~ print(lines)
+
+	lineidx = 0
+	for line in lines:
+		# ~ print(line)
+		for m in re.finditer(r'\d+', line):
+			# ~ print(m)
+			sidx = int(m.start())
+			eidx = int(m.end())
+			lab = m.group()
+			print('LINE {}: PARTNUM {} from {} to {}'.format(lineidx, lab, sidx, eidx))
+
+		lineidx = lineidx+1
+
 	answer = None
 
 	"""<<< Do something here"""
@@ -56,7 +71,7 @@ def main():
 
 	solve_part_1(1)
 
-	solve_part_2(1)
+	# ~ solve_part_2(1)
 
 	pass
 
