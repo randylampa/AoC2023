@@ -73,14 +73,15 @@ def parse_game_line2(line:str)->dict:
 
 	return game
 
-def print_game(game:dict):
+def print_game(game:dict, show_tosses:bool = False):
 	print('GameID', game['id'])
 	print('  red', game['red'])
 	print('  green', game['green'])
 	print('  blue', game['blue'])
-	print('tosses')
-	for toss in game['toss']:
-		print(' ', toss)
+	if show_tosses:
+		print('tosses')
+		for toss in game['toss']:
+			print(' ', toss)
 
 '''
 	SOLVE PART 1
@@ -146,7 +147,20 @@ def solve_part_2(demo:bool) -> str:
 	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	answer = None
+	lines = utils.read_file_into_list(fl)
+	# ~ print(lines)
+
+	powers = []
+
+	for line in lines:
+		# ~ print(line)
+		game = parse_game_line2(line)
+		# ~ print_game(game)
+		power = game['red'] * game['green'] * game['blue']
+		# ~ print(game['id'], power)
+		powers.append(power)
+
+	answer = sum(powers)
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -154,13 +168,15 @@ def solve_part_2(demo:bool) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 	# ~ demo is 7 instead of 8, but 3+4 EQUALS 7
 	# ~ 3197 is too high
 	# ~ I've been silly and counted impossible games instead of possible
 	# ~ 1853 is right
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
+	# ~ demo 2286
+	# ~ 72706 is right
 
 	pass
 
