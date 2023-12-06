@@ -101,7 +101,8 @@ def solve_part_1(demo:bool) -> str:
 		'blue': 14,
 	}
 
-	impossibleIds = []
+	idsPossible = []
+	idsImpossible = []
 
 	for line in lines:
 		# ~ print(line)
@@ -113,17 +114,22 @@ def solve_part_1(demo:bool) -> str:
 		for k in possible_game.keys():
 			if game[k] > possible_game[k]:
 				is_possible = False
-				impossibleIds.append(game['id'])
 				print('Game {} is impossible because {} > {} {}'.format(game['id'], game[k], possible_game[k], k))
 				# ~ print(line)
 				# ~ print_game(game)
 				# ~ exit()
 				break
+		if is_possible:
+			idsPossible.append(game['id'])
+		else:
+			idsImpossible.append(game['id'])
 		# ~ print(is_possible)
-	print('count:', len(impossibleIds))
-	print('list:', impossibleIds)
+	print('idsImpossible count:', len(idsImpossible))
+	print('idsImpossible list:', idsImpossible)
+	print('idsPossible count:', len(idsPossible))
+	print('idsPossible list:', idsPossible)
 
-	answer = sum(impossibleIds)
+	answer = sum(idsPossible)
 
 	"""<<< Do something here"""
 	utils.print_answer(1, demo, answer)
@@ -151,6 +157,8 @@ def main():
 	solve_part_1(0)
 	# ~ demo is 7 instead of 8, but 3+4 EQUALS 7
 	# ~ 3197 is too high
+	# ~ I've been silly and counted impossible games instead of possible
+	# ~ 1853 is right
 
 	# ~ solve_part_2(1)
 
