@@ -2,14 +2,18 @@
 
 Advent of Code 2023
 
-- 01 *
-- 02 **
-- 03 **
-- 04
-- 05
-- 06
-- 07
-- 08
+ "+" is initialized with description
+ "*" solved part 1
+ "**" solved part 2
+
+- 01 +*
+- 02 +**
+- 03 +**
+- 04 +
+- 05 +
+- 06 +
+- 07 +
+- 08 +
 - 09
 - 10
 - 11
