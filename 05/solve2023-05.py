@@ -28,9 +28,16 @@ mapPath = [
 	'locn',
 ]
 
+def split_list(lst:list, chunk_size:int)->list:
+	'''
+	https://www.altcademy.com/blog/how-to-split-a-list-in-python/
+	'''
+	return list(zip(*[iter(lst)] * chunk_size))
+
 def parseInputData(filename:str)->dict:
 	almanac = {
 		'seeds': [],
+		'seeds2': [],
 		'seed2soil': [],
 		'soil2fert': [],
 		'fert2watr': [],
@@ -52,6 +59,8 @@ def parseInputData(filename:str)->dict:
 		mapSect = None
 		if name=='seeds':
 			almanac['seeds'] = [*map(int, data.split(' '))]
+			# ~ now for part 2 ..
+			almanac['seeds2'] = split_list(almanac['seeds'], 2)
 		elif name=='seed-to-soil map':
 			mapSect = 'seed2soil'
 		elif name=='soil-to-fertilizer map':
@@ -107,7 +116,7 @@ def applyMap(xmaps:list, src:int)->int:
 	# ~ print(' mapped to {}'.format(dst))
 	return dst
 
-def traverse_seed2location(almanac:dict, seed:int)->int:
+def traverse_seed2location(almanac:dict, seed:int, printMsg:bool=True)->int:
 	soil = applyMap(almanac['seed2soil'], seed)
 	fert = applyMap(almanac['soil2fert'], soil)
 	watr = applyMap(almanac['fert2watr'], fert)
@@ -115,7 +124,8 @@ def traverse_seed2location(almanac:dict, seed:int)->int:
 	temp = applyMap(almanac['lght2temp'], lght)
 	humi = applyMap(almanac['temp2humi'], temp)
 	locn = applyMap(almanac['humi2locn'], humi)
-	print('Seed {}, soil {}, fertilizer {}, water {}, light {}, temperature {}, humidity {}, location {}'.format(seed, soil, fert, watr, lght, temp, humi, locn))
+	if printMsg:
+		print('Seed {}, soil {}, fertilizer {}, water {}, light {}, temperature {}, humidity {}, location {}'.format(seed, soil, fert, watr, lght, temp, humi, locn))
 	return locn
 
 '''
@@ -155,7 +165,36 @@ def solve_part_2(demo:bool) -> str:
 	fl = cur_dir + '/' + fn
 	"""Do something here >>>"""
 
-	answer = None
+	almanac = parseInputData(fn)
+	# ~ dumpData(almanac)
+
+	if 0: # begin
+		print(almanac['seed2soil'])
+		starts = []
+		for xmap in almanac['seed2soil']:
+			starts.append(xmap['srcMin'])
+		starts.sort()
+		print(starts)
+		return None
+		pass # end
+
+	locations = []
+
+	for seedMin,seedCount in almanac['seeds2']:
+		# ~ loc = traverse_seed2location(almanac, seed)
+		# ~ locations.append(loc)
+		# ~ print(seedMin,seedCount)
+		seedlocs = []
+		for offset in range(seedCount):
+			seed = seedMin + offset
+			loc = traverse_seed2location(almanac, seed, False)
+			print('seed {} in loc {}'.format(seed,loc))
+			seedlocs.append(loc)
+		locations.append(min(seedlocs))
+
+	# ~ print('locations:', locations)
+
+	answer = min(locations) if len(locations)>0 else None
 
 	"""<<< Do something here"""
 	utils.print_answer(2, demo, answer)
@@ -163,10 +202,12 @@ def solve_part_2(demo:bool) -> str:
 
 def main():
 
-	solve_part_1(0)
+	# ~ solve_part_1(0)
 	# ~ Answer_1 = 35 (demo)
+	# ~ Answer_1 = 806029445
 
-	# ~ solve_part_2(1)
+	solve_part_2(0)
+	# ~ Answer_2 = 46 (demo)
 
 	pass
 
