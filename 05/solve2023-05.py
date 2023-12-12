@@ -187,21 +187,21 @@ def splitInterval(interval:dict, targetIntervals:list)->list:
 	'''
 	intervals = []
 	for tInt in targetIntervals:
-		tIntBeg = tInt['inBase'];
+		tIntBeg = tInt['inBase']
 		tIntEnd = tInt['inBase'] + tInt['count']
 		sIntBeg = interval['inBase']
 		sIntEnd = interval['inBase'] + interval['count']
 
 		if sIntBeg >= tIntBeg and sIntBeg < tIntEnd:
-			print('begin of interval', interval2str(interval), 'matches into', interval2str(tInt))
+			# ~ print('begin of interval', interval2str(interval), 'matches into', interval2str(tInt))
 			if sIntEnd <= tIntEnd:
-				print('end of interval', interval2str(interval), 'matches into', interval2str(tInt))
+				# ~ print('end of interval', interval2str(interval), 'matches into', interval2str(tInt))
 				intervals.append(interval)
 				interval = None
 				break # matches completely, leave it alone and break
 			else:
-				print({sIntBeg, sIntEnd, tIntBeg, tIntEnd})
-				print('!!! end of interval', interval2str(interval), 'does not matches into', interval2str(tInt))
+				# ~ print({sIntBeg, sIntEnd, tIntBeg, tIntEnd})
+				# ~ print('!!! end of interval', interval2str(interval), 'does not matches into', interval2str(tInt))
 				lenMatch = tIntEnd - sIntBeg
 				intervalMatch = createInterval(lenMatch, sIntBeg)
 				intervalOver = createInterval(interval['count']-lenMatch, tIntEnd)
@@ -211,7 +211,7 @@ def splitInterval(interval:dict, targetIntervals:list)->list:
 				interval = None
 				# call splitInterval(intervalOver, targetIntervals) and merge with current list of intervals
 				xints = splitInterval(intervalOver, targetIntervals)
-				dumpIntervals(xints, 'intervalOver')
+				# ~ dumpIntervals(xints, 'intervalOver')
 				intervals = intervals+xints
 				break
 		pass
@@ -319,61 +319,59 @@ def solve_part_2(demo:bool) -> str:
 
 	locations = []
 
-	if 0: # begin
+	intrvls = {
+		'seed': almanac['seeds'],
+		'seedSplit': [],
+		#
+		'soil': [],
+		'soilSplit': [],
+		#
+		'fert': [],
+		'fertSplit': [],
+		#
+		'watr': [],
+		'watrSplit': [],
+		#
+		'lght': [],
+		'lghtSplit': [],
+		#
+		'temp': [],
+		'tempSplit': [],
+		#
+		'humi': [],
+		'humiSplit': [],
+		#
+		'locn': [],
+	}
 
-		for seedMin,seedCount in almanac['seeds2']:
-			# ~ loc = traverse_seed2location(almanac, seed)
-			# ~ locations.append(loc)
-			# ~ print(seedMin,seedCount)
-			seedlocs = []
-			for offset in range(seedCount):
-				seed = seedMin + offset
-				loc = traverse_seed2location(almanac, seed, False)
-				print('seed {} in loc {}'.format(seed,loc))
-				seedlocs.append(loc)
-			locations.append(min(seedlocs))
+	n = len(mapPath)
+	for i in range(n):
+		kSrc = mapPath[i]
+		kTgt = mapPath[i+1] if i+1<n else None
+		# ~ print(i, kSrc, kTgt)
+		if kTgt is None:
+			# and of all
+			print('==='+kSrc+'===')
+			break
+		kSrcSplit = kSrc+"Split"
+		kTrans = kSrc+"2"+kTgt
+		print('==='+kSrc+'===')
+		for intvl in intrvls[kSrc]:
+			# ~ dumpInterval(intvl, kSrc)
+			xint = splitInterval(intvl, almanac[kTrans])
+			# ~ dumpIntervals(xint, 'xint')
+			intrvls[kSrcSplit] = intrvls[kSrcSplit] + xint
+			# ~ print('---/'+kSrc+'---')
+		print(kSrc, len(intrvls[kSrc]), '->', kSrcSplit, len(intrvls[kSrcSplit]))
+		# ~ dumpIntervals(intrvls[kSrcSplit], kSrcSplit)
 
-		# ~ print('locations:', locations)
-		pass # end
+		intrvls[kTgt] = translateIntervals(intrvls[kSrcSplit], almanac[kTrans])
+		# ~ dumpIntervals(intrvls[kTgt], kTgt)
+	# ~ print(intrvls)
+	dumpIntervals(intrvls['locn'], 'locn')
 
-	seedIntervals = almanac['seeds']
-	seedIntervalsSplit = []
-
-	soilIntervals = []
-	soilIntervalsSplit = []
-
-	fertIntervals = []
-
-	watrIntervals = []
-
-	lghtIntervals = []
-
-	tempIntervals = []
-
-	humiIntervals = []
-
-	print('===seedIntervals===')
-	for seedInterval in seedIntervals:
-		dumpInterval(seedInterval, 'seedInterval')
-		xint = splitInterval(seedInterval, almanac['seed2soil'])
-		dumpIntervals(xint, 'xint')
-		seedIntervalsSplit = seedIntervalsSplit + xint
-		print('---/seedInterval---')
-	print('seedIntervals', len(seedIntervals), '-> seedIntervalsSplit', len(seedIntervalsSplit))
-	dumpIntervals(seedIntervalsSplit, 'seedIntervalsSplit')
-
-	soilIntervals = translateIntervals(seedIntervalsSplit, almanac['seed2soil'])
-	dumpIntervals(soilIntervals, 'soilIntervals')
-
-	print('===soilIntervals===')
-	for soilInterval in soilIntervals:
-		soilIntervalsSplit = soilIntervalsSplit + splitInterval(soilInterval, almanac['soil2fert'])
-		# ~ print('---/soilInterval---')
-	print('soilInterval', len(soilInterval), '-> soilIntervalsSplit', len(soilIntervalsSplit))
-	dumpIntervals(soilIntervalsSplit, 'soilIntervalsSplit')
-
-	fertIntervals = translateIntervals(soilIntervalsSplit, almanac['soil2fert'])
-	dumpIntervals(fertIntervals, 'fertIntervals')
+	for intvl in intrvls['locn']:
+		locations.append(intvl['inBase'])
 
 	answer = min(locations) if len(locations)>0 else None
 
@@ -390,6 +388,8 @@ def main():
 	solve_part_2(0)
 	# ~ Answer_2 = 46 (demo)
 	# ~ non-demo answer is too slow. didn't wait
+	# ~ Answer_2 = 46 (demo)
+	# ~ Answer_2 = 59370572 is right
 
 
 	pass
