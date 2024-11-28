@@ -81,6 +81,11 @@ def main():
 		fhout.write(content)
 		fhin.close();fhout.close()
 
+	print("inspect result & commit:")
+	print(" git add {}/".format(issue))
+	print(' git commit -m "day {} - init"'.format(issue))
+	print(' git push')
+
 	return 0
 
 if __name__ == '__main__':
